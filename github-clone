@@ -5,6 +5,12 @@
 # current directory, or updates them if they already exist.  This is
 # intended to be a simple utility for cloning a programmer's work in
 # one bulk swoop.
+#
+# Written by Eric James Michael Ritz
+#     <Ren@lifesnotsimple.com>
+#     September 2011
+#
+# This program is Public Domain.
 
 use Modern::Perl;
 use LWP::UserAgent;
