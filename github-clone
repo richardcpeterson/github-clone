@@ -70,7 +70,7 @@ for (@$repos) {
     else {
         qx(git clone $_->{clone_url})
             if prompt(
-                -prompt => "Clone $_->{name}: $_->{description} ",
+                -prompt => "Clone $_->{name}: $_->{description}? ",
                 -default => "n",
                 -yn,
             );
