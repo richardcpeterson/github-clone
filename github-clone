@@ -62,8 +62,14 @@ my $repos = get_repos_for($user);
 use feature "say";
 
 for (@$repos) {
-    say "Cloning $_->{name}: $_->{description}";
-    qx(git clone $_->{clone_url} 2>/dev/null);
+    if (-d "$_->{name}"){
+	    say "\nFetching $_->{name}";
+		qx(git --git-dir=$_->{name}/.git fetch);
+	}
+	else {
+		say "\nCloning $_->{name}: $_->{description}";
+		qx(git clone $_->{clone_url});
+	}
 }
 
 __END__
