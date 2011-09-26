@@ -12,7 +12,8 @@
 #
 # This program is Public Domain.
 
-use Modern::Perl;
+use strict;
+use warnings;
 use LWP::UserAgent;
 use JSON;
 
