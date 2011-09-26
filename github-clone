@@ -69,7 +69,7 @@ for (@$repos) {
         qx(git --git-dir=$_->{name}/.git fetch);
     }
     else {
-        qx(git clone $_->{clone_url} 2>/dev/null)
+        qx(git clone $_->{clone_url})
             if prompt(
                 -prompt => "Clone $_->{name}: $_->{description}",
                 -default => "n",
