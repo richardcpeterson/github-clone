@@ -61,6 +61,8 @@ my $repos = get_repos_for($user);
 
 say "Press y or n to clone repositories.  The default choice is n.";
 
+say "Cloning or fetching $user\'s ", scalar @$repos , " repositories";
+
 for (@$repos) {
     if (-d "$_->{name}") {
         say "\nFetching $_->{name}";
