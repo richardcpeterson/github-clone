@@ -59,6 +59,8 @@ unless ($user) {
 # Grab all the repositories in an array reference.
 my $repos = get_repos_for($user);
 
+use feature "say";
+
 for (@$repos) {
     say "Cloning $_->{name}: $_->{description}";
     qx(git clone $_->{clone_url} 2>/dev/null);
