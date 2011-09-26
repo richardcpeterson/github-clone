@@ -15,6 +15,7 @@
 use Modern::Perl;
 use LWP::UserAgent;
 use JSON;
+use IO::Prompt;
 
 # The base URI for the Github API.  This intentionally does not end
 # with a slash so that interpolation is friendlier on the eyes later.
@@ -58,9 +59,15 @@ unless ($user) {
 # Grab all the repositories in an array reference.
 my $repos = get_repos_for($user);
 
+say "Press y or n to clone repositories.  The default choice is n.";
+
 for (@$repos) {
-    say "Cloning $_->{name}: $_->{description}";
-    qx(git clone $_->{clone_url} 2>/dev/null);
+        qx(git clone $_->{clone_url} 2>/dev/null)
+            if prompt(
+                -prompt => "Clone $_->{name}: $_->{description}",
+                -default => "n",
+                -yn,
+            );
 }
 
 __END__
