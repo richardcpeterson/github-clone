@@ -1,0 +1,60 @@
+#!/usr/bin/env perl
+#
+# This program accepts one argument: the username of someone on
+# Github.  It then clones all of that person's repositories in the
+# current directory, or updates them if they already exist.  This is
+# intended to be a simple utility for cloning a programmer's work in
+# one bulk swoop.
+
+use Modern::Perl;
+use LWP::UserAgent;
+use JSON;
+
+# The base URI for the Github API.  This intentionally does not end
+# with a slash so that interpolation is friendlier on the eyes later.
+our $github_api_uri = "https://api.github.com";
+
+# Our user agent for communicating with Github.
+our $user_agent = LWP::UserAgent->new;
+
+# Give our user agent a unique name just to be a good net citizen.
+$user_agent->agent("github-clone/1.0");
+
+# Accepts a username and tries to return an array reference
+# representing information on that user's repositories.  See the
+# documentation
+#
+#     http://developer.github.com/v3/repos/
+#
+# for details on what should appear in the array.  If we do not get a
+# successful response from Github then the program will die with an
+# appropriate error message.
+sub get_repos_for($) {
+    my ($username) = @_;
+    my $api_uri = "${github_api_uri}/users/${username}/repos";
+    my $request = HTTP::Request->new(GET => $api_uri);
+    my $response = $user_agent->request($request);
+
+    if ($response->is_success) {
+        return decode_json($response->content);
+    }
+
+    die "Error: Received $response->message\n";
+}
+
+# Get our user or die otherwise.
+my $user = shift @ARGV;
+
+unless ($user) {
+    die "Usage: ./github-clone <username>";
+}
+
+# Grab all the repositories in an array reference.
+my $repos = get_repos_for($user);
+
+for (@$repos) {
+    say "Cloning $_->{name}: $_->{description}";
+    qx(git clone $_->{clone_url} 2>/dev/null);
+}
+
+__END__
