@@ -59,9 +59,8 @@ unless ($user) {
 # Grab all the repositories in an array reference.
 my $repos = get_repos_for($user);
 
-say "Press y or n to clone repositories.  The default choice is n.";
-
 say "Cloning or fetching $user\'s ", scalar @$repos , " repositories";
+say "Press y or n to clone repositories.  The default choice is n.\n";
 
 for (@$repos) {
     if (-d "$_->{name}") {
@@ -71,7 +70,7 @@ for (@$repos) {
     else {
         qx(git clone $_->{clone_url})
             if prompt(
-                -prompt => "Clone $_->{name}: $_->{description}",
+                -prompt => "Clone $_->{name}: $_->{description} ",
                 -default => "n",
                 -yn,
             );
