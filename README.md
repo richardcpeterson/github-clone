@@ -27,21 +27,28 @@ on Ubuntu 11.10 and Microsoft Vista 32-bit.
     $ ./github-clone <username>
 
 This will clone all of the user’s repositories into the current
-directory.  For example:
+directory, and existing repositories will be updated.  For example:
 
     $ mkdir dumb-crap-by-ejmr && cd dumb-crap-by-ejmr
     $ ./github-clone ejmr
-    Cloning JTorrent: A Perl script for fetching Japanese media torrents.
-    Cloning php-mode: A PHP mode for GNU Emacs
-    Cloning EmacsPKG: A Simple Tool for Collecting Elisp Files
+    Cloning or fetching ejmr's 4 repositories
+    Press y or n to clone repositories.  The default choice is n.
+
+    Clone JTorrent: A Perl script for fetching Japanese media torrents.? y
+    remote: Counting objects: 865, done.
+    remote: Compressing objects: 100% (382/382), done.
+    remote: Total 865 (delta 472), reused 820 (delta 427)
+    Receiving objects: 100% (865/865), 141.22 KiB, done.
+    Resolving deltas: 100% (472/472), done.
+    Clone php-mode: A PHP mode for GNU Emacs? n
+    Fetching EmacsPKG
+    Clone github-clone: A Script For Cloning All Repos By a Github User? n
 
 # Future Plans
 
 I am open to any ideas people might have that would make this script
-more useful.  For certain I plan on adding some method of interaction
-so that you can decide which repositories to clone.  Please feel free
-to leave feature requests here, or email them to me at `Ren at
-lifesnotsimple dot com`.
+more useful.  Please feel free to leave feature requests here, or
+email them to me at `Ren at lifesnotsimple dot com`.
 
 # License
 
