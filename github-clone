@@ -12,7 +12,7 @@
 #
 # This program is Public Domain.
 
-use Modern::Perl;
+use common::sense;
 use LWP::UserAgent;
 use JSON;
 use IO::Prompt;

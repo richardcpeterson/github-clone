@@ -14,13 +14,13 @@ Thus `github-clone` was born.
 # Requirements
 
 1. Perl 5.10 or Higher
-2. `Modern::Perl`
+2. `common::sense`
 3. `LWP`
 4. `JSON`
 5. `IO::Prompt`
 
 The program should work on any major operating system. It has been tested
-on Ubuntu 11.10 and Microsoft Vista 32-bit. 
+on Ubuntu 11.10 and Microsoft Vista 32-bit.
 
 # Usage
 
