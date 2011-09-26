@@ -62,6 +62,8 @@ my $repos = get_repos_for($user);
 say "Cloning or fetching $user\'s ", scalar @$repos , " repositories.";
 say "Press y or n to clone repositories.  The default choice is n.\n";
 
+# For each repository we either run git-fetch if it already exists, or
+# if not then we ask the user whether or not they want to clone it.
 for (@$repos) {
     if (-d "$_->{name}") {
         say "Fetching $_->{name}";
