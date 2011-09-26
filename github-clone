@@ -53,7 +53,7 @@ sub get_repos_for($) {
 my $user = shift @ARGV;
 
 unless ($user) {
-    die "Usage: ./github-clone <username>";
+    say "Usage: ./github-clone <username>" and exit(1);
 }
 
 # Grab all the repositories in an array reference.
