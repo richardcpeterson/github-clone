@@ -59,12 +59,12 @@ unless ($user) {
 # Grab all the repositories in an array reference.
 my $repos = get_repos_for($user);
 
-say "Cloning or fetching $user\'s ", scalar @$repos , " repositories";
+say "Cloning or fetching $user\'s ", scalar @$repos , " repositories.";
 say "Press y or n to clone repositories.  The default choice is n.\n";
 
 for (@$repos) {
     if (-d "$_->{name}") {
-        say "\nFetching $_->{name}";
+        say "Fetching $_->{name}";
         qx(git --git-dir=$_->{name}/.git fetch);
     }
     else {
