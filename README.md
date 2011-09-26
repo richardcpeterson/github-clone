@@ -17,6 +17,7 @@ Thus `github-clone` was born.
 2. `Modern::Perl`
 3. `LWP`
 4. `JSON`
+5. `IO::Prompt`
 
 The program should work on any major operating system, but has only
 been tested on Ubuntu 11.10.
