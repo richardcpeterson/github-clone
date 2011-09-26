@@ -3,11 +3,11 @@
 This simple Perl script has its roots in an email from a
 [good friend](https://github.com/richardcpeterson):
 
-    Maybe there should be a repo browser like your
-    [anime downloader](https://github.com/ejmr/JTorrent) script. You
-    would run the script, give it the name of a github user, and it
-    would let you pull clone some or all of his repos into
-    subdirectories. Then you could also add batch fetches and stuff.
+    Maybe there should be a repo browser like your anime downloader
+    script. You would run the script, give it the name of a github
+    user, and it would let you pull clone some or all of his repos
+    into subdirectories. Then you could also add batch fetches and
+    stuff.
 
 Thus `github-clone` was born.
 
