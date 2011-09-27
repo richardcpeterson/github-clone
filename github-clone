@@ -57,7 +57,7 @@ sub get_repos_for($) {
 # if not then we ask the user whether or not they want to clone it.
 # The function accepts an array reference of repositories as returned
 # by get_repos_for().
-sub clone_or_fetch(_) {
+sub clone_or_fetch($) {
     my ($repos) = @_;
 
     say "Cloning or fetching ", scalar @$repos , " repositories.";
@@ -81,7 +81,7 @@ sub clone_or_fetch(_) {
 
 # Takes the return value of get_repos_for() and lists all of those
 # repositories and their description.
-sub list(@) {
+sub list($) {
     my ($repos) = @_;
     say "Total Number of Repositories: ", scalar @$repos, "\n";
     say "$_->{name}: $_->{description}" for @$repos;
