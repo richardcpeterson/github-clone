@@ -10,6 +10,10 @@
 #     <Ren@lifesnotsimple.com>
 #     September 2011
 #
+# Contributors (In Alphabetical Order):
+#     Seth Hayward
+#     Richard Peterson
+#
 # This program is Public Domain.
 
 use common::sense;
