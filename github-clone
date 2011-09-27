@@ -78,18 +78,31 @@ sub clone_or_fetch(_) {
     }
 }
 
+# Takes the return value of get_repos_for() and lists all of those
+# repositories and their description.
+sub list(@) {
+    my ($repos) = @_;
+    say "Total Number of Repositories: ", scalar @$repos, "\n";
+    say "$_->{name}: $_->{description}" for @$repos;
+}
+
 ######################################################################
 #
 # Main Logic
 #
 ######################################################################
 
-my $user = shift @ARGV;
+my ($user, $command) = @ARGV;
 
 unless ($user) {
-    say "Usage: ./github-clone <username>" and exit(1);
+    say "Usage: ./github-clone <username> [--list]" and exit(1);
 }
 
-clone_or_fetch(get_repos_for($user));
+if ($command ~~ /--list/o) {
+    list(get_repos_for($user));
+}
+else {
+    clone_or_fetch(get_repos_for($user));
+}
 
 __END__
