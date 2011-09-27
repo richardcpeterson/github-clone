@@ -20,7 +20,8 @@ Thus `github-clone` was born.
 5. `Term::Prompt`
 
 The program should work on any major operating system. It has been tested
-on Ubuntu 11.10 and Microsoft Vista 32-bit.
+on Ubuntu 11.10, Windows Vista 32-bit and Windows XP 32-bit using
+Strawberry Perl.
 
 # Usage
 
