@@ -10,6 +10,10 @@
 #     <Ren@lifesnotsimple.com>
 #     September 2011
 #
+# Contributors (In Alphabetical Order):
+#     Seth Hayward
+#     Richard Peterson
+#
 # This program is Public Domain.
 
 use common::sense;
@@ -49,34 +53,56 @@ sub get_repos_for($) {
     die "Error: Received $response->message\n";
 }
 
-# Get our user or die otherwise.
-my $user = shift @ARGV;
-
-unless ($user) {
-    say "Usage: ./github-clone <username>" and exit(1);
-}
-
-# Grab all the repositories in an array reference.
-my $repos = get_repos_for($user);
-
-say "Cloning or fetching $user\'s ", scalar @$repos , " repositories.";
-say "Press y or n to clone repositories.  The default choice is n.\n";
-
 # For each repository we either run git-fetch if it already exists, or
 # if not then we ask the user whether or not they want to clone it.
-for (@$repos) {
-    if (-d "$_->{name}") {
-        say "Fetching $_->{name}";
-        qx(git --git-dir=$_->{name}/.git fetch);
-    }
-    else {
-        qx(git clone $_->{clone_url})
+# The function accepts an array reference of repositories as returned
+# by get_repos_for().
+sub clone_or_fetch(_) {
+    my ($repos) = @_;
+
+    say "Cloning or fetching ", scalar @$repos , " repositories.";
+    say "Press y or n to clone repositories.  The default choice is n.\n";
+
+    for (@$repos) {
+        if (-d "$_->{name}") {
+            say "Fetching $_->{name}";
+            qx(git --git-dir=$_->{name}/.git fetch);
+        } else {
+            qx(git clone $_->{clone_url})
             if prompt(
                 -prompt => "Clone $_->{name}: $_->{description}? ",
                 -default => "n",
                 -yn,
             );
+        }
     }
+}
+
+# Takes the return value of get_repos_for() and lists all of those
+# repositories and their description.
+sub list(@) {
+    my ($repos) = @_;
+    say "Total Number of Repositories: ", scalar @$repos, "\n";
+    say "$_->{name}: $_->{description}" for @$repos;
+}
+
+######################################################################
+#
+# Main Logic
+#
+######################################################################
+
+my ($user, $command) = @ARGV;
+
+unless ($user) {
+    say "Usage: ./github-clone <username> [--list]" and exit(1);
+}
+
+if ($command ~~ /--list/o) {
+    list(get_repos_for($user));
+}
+else {
+    clone_or_fetch(get_repos_for($user));
 }
 
 __END__

@@ -44,6 +44,14 @@ directory, and existing repositories will be updated.  For example:
     Fetching EmacsPKG
     Clone github-clone: A Script For Cloning All Repos By a Github User? n
 
+If you simply want to see how many repositories a user has and what
+they are, you can run the command
+
+    $ ./github-clone <username> --list
+
+This will give you a count of the repositories, their name, and their
+description.
+
 # Future Plans
 
 I am open to any ideas people might have that would make this script
