@@ -84,8 +84,28 @@ sub clone_or_fetch($) {
 # repositories and their description.
 sub list($) {
     my ($repos) = @_;
+    my $not_cloned_repos = 0;
+    
     say "Total Number of Repositories: ", scalar @$repos, "\n";
-    say "$_->{name}: $_->{description}" for @$repos;
+    
+    
+    say "Cloned repositories:";
+    for (@$repos) {
+        if (-d "$_->{name}") {
+            say "  $_->{name}: $_->{description}";
+        } else {
+            $not_cloned_repos++;
+        }
+    }
+    
+    if ($not_cloned_repos) {
+        say "\nNot cloned repositories:";
+        for (@$repos) {
+            unless (-d "$_->{name}") {
+                say "  $_->{name}: $_->{description}";
+            }
+        }
+    }
 }
 
 ######################################################################
