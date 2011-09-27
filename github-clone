@@ -19,7 +19,7 @@
 use common::sense;
 use LWP::UserAgent;
 use JSON;
-use IO::Prompt;
+use Term::Prompt;
 
 # The base URI for the Github API.  This intentionally does not end
 # with a slash so that interpolation is friendlier on the eyes later.
@@ -70,10 +70,11 @@ sub clone_or_fetch($) {
         }
         else {
             qx(git clone $_->{clone_url})
-                if prompt(
-                    -prompt => "Clone $_->{name}: $_->{description}? ",
-                    -default => "n",
-                    -yn,
+                if &prompt(
+                    "y",
+                    "\nClone $_->{name}: $_->{description}? \n",
+                    "Please type \'y\' or \'n\'",
+                    "y"
                 );
         }
     }
