@@ -53,34 +53,43 @@ sub get_repos_for($) {
     die "Error: Received $response->message\n";
 }
 
-# Get our user or die otherwise.
+# For each repository we either run git-fetch if it already exists, or
+# if not then we ask the user whether or not they want to clone it.
+# The function accepts an array reference of repositories as returned
+# by get_repos_for().
+sub clone_or_fetch(_) {
+    my ($repos) = @_;
+
+    say "Cloning or fetching ", scalar @$repos , " repositories.";
+    say "Press y or n to clone repositories.  The default choice is n.\n";
+
+    for (@$repos) {
+        if (-d "$_->{name}") {
+            say "Fetching $_->{name}";
+            qx(git --git-dir=$_->{name}/.git fetch);
+        } else {
+            qx(git clone $_->{clone_url})
+            if prompt(
+                -prompt => "Clone $_->{name}: $_->{description}? ",
+                -default => "n",
+                -yn,
+            );
+        }
+    }
+}
+
+######################################################################
+#
+# Main Logic
+#
+######################################################################
+
 my $user = shift @ARGV;
 
 unless ($user) {
     say "Usage: ./github-clone <username>" and exit(1);
 }
 
-# Grab all the repositories in an array reference.
-my $repos = get_repos_for($user);
-
-say "Cloning or fetching $user\'s ", scalar @$repos , " repositories.";
-say "Press y or n to clone repositories.  The default choice is n.\n";
-
-# For each repository we either run git-fetch if it already exists, or
-# if not then we ask the user whether or not they want to clone it.
-for (@$repos) {
-    if (-d "$_->{name}") {
-        say "Fetching $_->{name}";
-        qx(git --git-dir=$_->{name}/.git fetch);
-    }
-    else {
-        qx(git clone $_->{clone_url})
-            if prompt(
-                -prompt => "Clone $_->{name}: $_->{description}? ",
-                -default => "n",
-                -yn,
-            );
-    }
-}
+clone_or_fetch(get_repos_for($user));
 
 __END__
